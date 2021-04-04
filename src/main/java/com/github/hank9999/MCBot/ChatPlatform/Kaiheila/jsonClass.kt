@@ -12,3 +12,23 @@ data class WebsocketGatewayResp (
             val url: String? = null
     )
 }
+
+@JsonClass(generateAdapter = true)
+data class WsSignalling (
+    val s: Int,
+    val sn: Int?,
+    val d: D?
+) {
+    data class D (
+        val code: Int?,
+        val err: String?,
+        val session_id: String?,
+
+    )
+}
+
+@JsonClass(generateAdapter = true)
+data class WsPing (
+    val s: Int = 2,
+    val sn: Int,
+)

@@ -1,5 +1,6 @@
 package com.github.hank9999.MCBot
 
+import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Utils.KaiheilaWs
 import com.github.hank9999.MCBot.Utils.Config
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -18,5 +19,9 @@ object MCBot {
         }
         Config().setValue()
         Config().checkConfig()
+        KaiheilaWs().connect()
+        while (true) {
+            val command = readLine()
+        }
     }
 }
