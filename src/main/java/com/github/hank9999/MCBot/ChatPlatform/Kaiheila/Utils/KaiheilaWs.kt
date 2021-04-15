@@ -2,7 +2,7 @@ package com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Utils
 
 import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Hardcore
 import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Libs.KaiheilaWsClient
-import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.WebsocketGatewayResp
+import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Types.WebsocketGatewayResp
 import com.github.hank9999.MCBot.Utils.Config
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
@@ -21,6 +21,7 @@ class KaiheilaWs {
         var pongTime: Long = 0
         var timeoutCount: Int = 0
         val logger: Logger = LoggerFactory.getLogger(KaiheilaWs::class.java)
+        val recvQueue = mutableMapOf<Int, String>()
     }
 
     private fun getWsUrl(): String {
