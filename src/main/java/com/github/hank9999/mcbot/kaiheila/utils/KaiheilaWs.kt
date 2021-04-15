@@ -3,7 +3,7 @@ package com.github.hank9999.mcbot.kaiheila.utils
 import com.github.hank9999.mcbot.kaiheila.Hardcore
 import com.github.hank9999.mcbot.kaiheila.libs.KaiheilaWsClient
 import com.github.hank9999.mcbot.kaiheila.types.WebsocketGatewayResp
-import com.github.hank9999.mcbot.Utils.Config
+import com.github.hank9999.mcbot.utils.Config
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.Request

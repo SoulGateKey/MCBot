@@ -1,7 +1,7 @@
 package com.github.hank9999.mcbot
 
 import com.github.hank9999.mcbot.kaiheila.utils.KaiheilaWs
-import com.github.hank9999.mcbot.Utils.Config
+import com.github.hank9999.mcbot.utils.Config
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.system.exitProcess
