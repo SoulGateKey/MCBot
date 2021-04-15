@@ -1,4 +1,4 @@
-package com.github.hank9999.MCBot.Utils
+package com.github.hank9999.mcbot.Utils
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

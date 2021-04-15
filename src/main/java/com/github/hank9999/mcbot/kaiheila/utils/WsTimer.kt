@@ -1,6 +1,6 @@
-package com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Utils
+package com.github.hank9999.mcbot.kaiheila.utils
 
-import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Types.WsPing
+import com.github.hank9999.mcbot.kaiheila.types.WsPing
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.util.*

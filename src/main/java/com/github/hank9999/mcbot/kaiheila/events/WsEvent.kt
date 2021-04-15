@@ -1,9 +1,9 @@
-package com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Events
+package com.github.hank9999.mcbot.kaiheila.events
 
-import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Types.WsSignalling
-import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Utils.KaiheilaWs
-import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Utils.MessageHandler
-import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Utils.WsTimer
+import com.github.hank9999.mcbot.kaiheila.types.WsSignalling
+import com.github.hank9999.mcbot.kaiheila.utils.KaiheilaWs
+import com.github.hank9999.mcbot.kaiheila.utils.MessageHandler
+import com.github.hank9999.mcbot.kaiheila.utils.WsTimer
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.util.*

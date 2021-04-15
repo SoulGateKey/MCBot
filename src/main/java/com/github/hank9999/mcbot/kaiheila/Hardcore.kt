@@ -1,4 +1,4 @@
-package com.github.hank9999.MCBot.ChatPlatform.Kaiheila
+package com.github.hank9999.mcbot.kaiheila
 
 class Hardcore {
     object api {

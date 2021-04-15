@@ -1,11 +1,9 @@
-package com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Libs
+package com.github.hank9999.mcbot.kaiheila.libs
 
-import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Events.WsEvent
-import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Utils.KaiheilaWs
+import com.github.hank9999.mcbot.kaiheila.events.WsEvent
+import com.github.hank9999.mcbot.kaiheila.utils.KaiheilaWs
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import java.net.URI
 
 class KaiheilaWsClient(serverUri: URI) : WebSocketClient(serverUri) {

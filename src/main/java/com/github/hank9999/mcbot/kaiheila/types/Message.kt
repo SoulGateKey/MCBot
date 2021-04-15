@@ -1,4 +1,4 @@
-package com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Types
+package com.github.hank9999.mcbot.kaiheila.types
 
 import com.squareup.moshi.JsonClass
 

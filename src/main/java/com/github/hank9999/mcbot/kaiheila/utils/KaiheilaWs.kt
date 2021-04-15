@@ -1,9 +1,9 @@
-package com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Utils
+package com.github.hank9999.mcbot.kaiheila.utils
 
-import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Hardcore
-import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Libs.KaiheilaWsClient
-import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Types.WebsocketGatewayResp
-import com.github.hank9999.MCBot.Utils.Config
+import com.github.hank9999.mcbot.kaiheila.Hardcore
+import com.github.hank9999.mcbot.kaiheila.libs.KaiheilaWsClient
+import com.github.hank9999.mcbot.kaiheila.types.WebsocketGatewayResp
+import com.github.hank9999.mcbot.Utils.Config
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.Request

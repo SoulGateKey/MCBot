@@ -15,7 +15,7 @@
     </properties>
 
     <build>
-        <sourceDirectory>${project.basedir}/src/main/java/com/github/hank9999/MCBot</sourceDirectory>
+        <sourceDirectory>src/main/java/com/github/hank9999/mcbot</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
