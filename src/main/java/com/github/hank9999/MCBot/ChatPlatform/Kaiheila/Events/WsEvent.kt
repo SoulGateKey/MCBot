@@ -2,6 +2,7 @@ package com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Events
 
 import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Types.WsSignalling
 import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Utils.KaiheilaWs
+import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Utils.MessageHandler
 import com.github.hank9999.MCBot.ChatPlatform.Kaiheila.Utils.WsTimer
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -40,9 +41,21 @@ class WsEvent {
                 }
             }
             0 -> {
-                if (KaiheilaWs.sn < wsText.sn!!) {
-                    KaiheilaWs.sn = wsText.sn
-                    KaiheilaWs.logger.info("开黑啦 >>> {}", text)
+                if (wsText.sn!! <= KaiheilaWs.sn) {
+                    return
+                }
+                if (KaiheilaWs.status == 2) {
+                    KaiheilaWs.recvQueue[wsText.sn] = text
+                }
+                while (true) {
+                    if (KaiheilaWs.recvQueue.contains(KaiheilaWs.sn + 1)) {
+                        val context = KaiheilaWs.recvQueue[KaiheilaWs.sn + 1]
+                        KaiheilaWs.recvQueue.remove(KaiheilaWs.sn + 1)
+                        KaiheilaWs.sn += 1
+                        MessageHandler().onEvent(context!!)
+                    } else {
+                        break
+                    }
                 }
             }
             3 -> KaiheilaWs.pongTime = System.currentTimeMillis()
