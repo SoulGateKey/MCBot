@@ -24,6 +24,8 @@ class KaiheilaWs {
         val recvQueue = mutableMapOf<Int, String>()
     }
 
+    private val getWsAddressError = "获取开黑啦WS连接地址第{}次失败, 等待{}秒后重试"
+
     private fun getWsUrl(): String {
         logger.info("开始获取开黑啦WS连接地址")
         var errorCount = 0
@@ -43,7 +45,7 @@ class KaiheilaWs {
                         logger.error("获取开黑啦WS连接地址时 HTTP请求失败")
                         errorCount += 1
                         logger.error(
-                            "获取开黑啦WS连接地址第{}次失败, 等待{}秒后重试",
+                            getWsAddressError,
                             errorCount,
                             (if (errorCount * 5 <= 30) errorCount * 5 else 30)
                         )
@@ -62,7 +64,7 @@ class KaiheilaWs {
                     logger.error("获取开黑啦WS连接地址时 json解析失败\njson内容: {}", resp)
                     errorCount += 1
                     logger.error(
-                        "获取开黑啦WS连接地址第{}次失败, 等待{}秒后重试",
+                        getWsAddressError,
                         errorCount,
                         (if (errorCount * 5 <= 30) errorCount * 5 else 30)
                     )
@@ -75,7 +77,7 @@ class KaiheilaWs {
                     logger.error("获取开黑啦WS连接地址时 开黑啦返回错误")
                     errorCount += 1
                     logger.error(
-                        "获取开黑啦WS连接地址第{}次失败, 等待{}秒后重试",
+                        getWsAddressError,
                         errorCount,
                         (if (errorCount * 5 <= 30) errorCount * 5 else 30)
                     )
@@ -87,7 +89,7 @@ class KaiheilaWs {
                     logger.error("获取开黑啦WS连接地址时 无法找到url")
                     errorCount += 1
                     logger.error(
-                        "获取开黑啦WS连接地址第{}次失败, 等待{}秒后重试",
+                        getWsAddressError,
                         errorCount,
                         (if (errorCount * 5 <= 30) errorCount * 5 else 30)
                     )

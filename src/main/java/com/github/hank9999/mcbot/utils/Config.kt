@@ -16,6 +16,7 @@ import kotlin.system.exitProcess
 class Config {
 
     private val logger: Logger = LoggerFactory.getLogger(Config::class.java)
+    private val configFile = "config.conf"
 
     object Bot {
         var client_id: String? = null
@@ -41,13 +42,13 @@ class Config {
     }
 
     fun checkExists(): Boolean {
-        val file = File("config.conf")
+        val file = File(configFile)
         if (file.exists()) {
             return true
         } else {
-            val inputStream: InputStream = Config::class.java.getResourceAsStream("/config.conf")!!
+            val inputStream: InputStream = Config::class.java.getResourceAsStream("/$configFile")!!
             try {
-                Files.copy(inputStream, Paths.get("config.conf"))
+                Files.copy(inputStream, Paths.get(configFile))
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
                 logger.error("配置文件错误: 复制配置文件时未找到程序内文件")
@@ -112,7 +113,7 @@ class Config {
 
     fun setValue() {
         val loader = HoconConfigurationLoader.builder()
-                .path(Paths.get("config.conf"))
+                .path(Paths.get(configFile))
                 .build()
         val root: CommentedConfigurationNode
         try {
