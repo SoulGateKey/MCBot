@@ -31,8 +31,8 @@ class KaiheilaWs {
             run loop@{
                 val client = OkHttpClient()
                 val request: Request = Request.Builder()
-                    .url(Hardcore.api.Websocket.gatewayUrl)
-                .addHeader("Authorization", "Bot " + Config.bot.token)
+                    .url(Hardcore.Api.Websocket.gatewayUrl)
+                .addHeader("Authorization", "Bot " + Config.Bot.token)
                     .build()
                 var resp: String
                 client.newCall(request).execute().use { response ->

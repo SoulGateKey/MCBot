@@ -17,20 +17,20 @@ class Config {
 
     private val logger: Logger = LoggerFactory.getLogger(Config::class.java)
 
-    object bot {
+    object Bot {
         var client_id: String? = null
         var client_secret: String? = null
         var token: String? = null
         var cmd_prefix: List<String>? =  listOf(".", "。", "/", "#")
         var superadmins: List<Int>? = listOf()
     }
-    object ws {
+    object Ws {
         var host: String? = "localhost"
         var port: Int? = 3001
         var path: String? = "/path"
     }
-    object database {
-        object mysql {
+    object DataBase {
+        object MySQL {
             var enable: Boolean? = false
             var host: String? = "localhost"
             var port: Int? = 3306
@@ -62,48 +62,48 @@ class Config {
     }
 
     fun checkConfig() {
-        if (bot.client_id == null || bot.client_id!!.isEmpty()) {
+        if (Bot.client_id == null || Bot.client_id!!.isEmpty()) {
             logger.error("配置文件错误: bot.client_id 不存在或为空")
             exitProcess(1)
-        } else if (bot.client_secret == null || bot.client_secret!!.isEmpty()) {
+        } else if (Bot.client_secret == null || Bot.client_secret!!.isEmpty()) {
             logger.error("配置文件错误: bot.client_secret 不存在或为空")
             exitProcess(1)
-        } else if (bot.token == null || bot.token!!.isEmpty()) {
+        } else if (Bot.token == null || Bot.token!!.isEmpty()) {
             logger.error("配置文件错误: bot.token 不存在或为空")
             exitProcess(1)
-        } else if (bot.cmd_prefix == null || bot.cmd_prefix!!.isEmpty()) {
+        } else if (Bot.cmd_prefix == null || Bot.cmd_prefix!!.isEmpty()) {
             logger.error("配置文件错误: bot.cmd_prefix 不存在或为空")
             exitProcess(1)
-        } else if (bot.superadmins == null) {
+        } else if (Bot.superadmins == null) {
             logger.error("配置文件错误: bot.superadmins 不存在")
             exitProcess(1)
-        } else if (ws.host == null || ws.host!!.isEmpty()) {
+        } else if (Ws.host == null || Ws.host!!.isEmpty()) {
             logger.error("配置文件错误: ws.host 不存在或为空")
             exitProcess(1)
-        } else if (ws.port == null || (ws.port!! < 0 || ws.port!! > 65535)) {
+        } else if (Ws.port == null || (Ws.port!! < 0 || Ws.port!! > 65535)) {
             logger.error("配置文件错误: ws.port 不存在或不合法")
             exitProcess(1)
-        } else if (ws.path == null || ws.path!!.isEmpty()) {
+        } else if (Ws.path == null || Ws.path!!.isEmpty()) {
             logger.error("配置文件错误: ws.path 不存在或为空")
             exitProcess(1)
-        } else if (database.mysql.enable == null) {
+        } else if (DataBase.MySQL.enable == null) {
             logger.error("配置文件错误: database.mysql.enable 不存在或为空")
             exitProcess(1)
         }
-        if (database.mysql.enable!!) {
-            if (database.mysql.host == null || database.mysql.host!!.isEmpty()) {
+        if (DataBase.MySQL.enable!!) {
+            if (DataBase.MySQL.host == null || DataBase.MySQL.host!!.isEmpty()) {
                 logger.error("配置文件错误: database.mysql.host 不存在或为空")
                 exitProcess(1)
-            } else if (database.mysql.port == null || (database.mysql.port!! < 0 || database.mysql.port!! > 65535)) {
+            } else if (DataBase.MySQL.port == null || (DataBase.MySQL.port!! < 0 || DataBase.MySQL.port!! > 65535)) {
                 logger.error("配置文件错误: database.mysql.port 不存在或不合法")
                 exitProcess(1)
-            } else if (database.mysql.user == null || database.mysql.user!!.isEmpty()) {
+            } else if (DataBase.MySQL.user == null || DataBase.MySQL.user!!.isEmpty()) {
                 logger.error("配置文件错误: database.mysql.user 不存在或为空")
                 exitProcess(1)
-            } else if (database.mysql.password == null || database.mysql.password!!.isEmpty()) {
+            } else if (DataBase.MySQL.password == null || DataBase.MySQL.password!!.isEmpty()) {
                 logger.error("配置文件错误: database.mysql.password 不存在或为空")
                 exitProcess(1)
-            } else if (database.mysql.database == null || database.mysql.database!!.isEmpty()) {
+            } else if (DataBase.MySQL.database == null || DataBase.MySQL.database!!.isEmpty()) {
                 logger.error("配置文件错误: database.mysql.database 不存在或为空")
                 exitProcess(1)
             }
@@ -125,28 +125,28 @@ class Config {
             exitProcess(1)
         }
 
-        bot.client_id = root.node("bot", "client_id").string
-        bot.client_secret = root.node("bot", "client_secret").string
-        bot.token = root.node("bot", "token").string
+        Bot.client_id = root.node("bot", "client_id").string
+        Bot.client_secret = root.node("bot", "client_secret").string
+        Bot.token = root.node("bot", "token").string
         if (!root.node("bot", "cmd_prefix").isList) {
             logger.error("配置文件错误: bot.cmd_prefix类型错误 非List类型")
             exitProcess(1)
         }
-        bot.cmd_prefix = root.node("bot", "cmd_prefix").getList(String::class.java)
+        Bot.cmd_prefix = root.node("bot", "cmd_prefix").getList(String::class.java)
         if (!root.node("bot", "superadmins").isList) {
             logger.error("配置文件错误: bot.superadmins类型错误 非List类型")
             exitProcess(1)
         }
-        bot.superadmins = root.node("bot", "superadmins").getList(Int::class.javaObjectType)
-        ws.host = root.node("ws", "host").string
-        ws.port = root.node("ws", "port").int
-        ws.path = root.node("ws", "path").string
-        database.mysql.enable = root.node("database", "mysql", "enable").boolean
-        database.mysql.host = root.node("database", "mysql", "host").string
-        database.mysql.port = root.node("database", "mysql", "port").int
-        database.mysql.user = root.node("database", "mysql", "user").string
-        database.mysql.password = root.node("database", "mysql", "password").string
-        database.mysql.database = root.node("database", "mysql", "database").string
+        Bot.superadmins = root.node("bot", "superadmins").getList(Int::class.javaObjectType)
+        Ws.host = root.node("ws", "host").string
+        Ws.port = root.node("ws", "port").int
+        Ws.path = root.node("ws", "path").string
+        DataBase.MySQL.enable = root.node("database", "mysql", "enable").boolean
+        DataBase.MySQL.host = root.node("database", "mysql", "host").string
+        DataBase.MySQL.port = root.node("database", "mysql", "port").int
+        DataBase.MySQL.user = root.node("database", "mysql", "user").string
+        DataBase.MySQL.password = root.node("database", "mysql", "password").string
+        DataBase.MySQL.database = root.node("database", "mysql", "database").string
     }
 
 }
