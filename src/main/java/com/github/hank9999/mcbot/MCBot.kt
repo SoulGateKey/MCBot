@@ -1,9 +1,10 @@
 package com.github.hank9999.mcbot
 
-import com.github.hank9999.mcbot.kaiheila.utils.KaiheilaWs
+import com.github.hank9999.mcbot.kaiheila.KaiheilaWs
 import com.github.hank9999.mcbot.utils.Config
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
 object MCBot {
@@ -19,9 +20,16 @@ object MCBot {
         }
         Config().setValue()
         Config().checkConfig()
-        KaiheilaWs().connect()
-        while (true) {
-            val command = readLine()
+        thread  {
+            KaiheilaWs().connect()
+        }
+        thread  {
+            while (true) {
+                val command = readLine()
+                if (command?.startsWith("quit") == true) {
+                    exitProcess(0)
+                }
+            }
         }
     }
 }

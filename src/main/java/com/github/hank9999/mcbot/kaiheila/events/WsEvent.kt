@@ -1,7 +1,8 @@
 package com.github.hank9999.mcbot.kaiheila.events
 
 import com.github.hank9999.mcbot.kaiheila.types.WsSignalling
-import com.github.hank9999.mcbot.kaiheila.utils.KaiheilaWs
+import com.github.hank9999.mcbot.kaiheila.KaiheilaWs
+import com.github.hank9999.mcbot.kaiheila.types.WsStatus
 import com.github.hank9999.mcbot.kaiheila.utils.MessageHandler
 import com.github.hank9999.mcbot.kaiheila.utils.WsTimer
 import com.squareup.moshi.Moshi
@@ -26,10 +27,10 @@ class WsEvent {
             1 -> {
                 if (wsText.d!!.code!! == 0) {
                     KaiheilaWs.logger.info("已收到开黑啦的Hello消息, 连接成功创立")
-                    KaiheilaWs.status = 2
+                    KaiheilaWs.status = WsStatus.Connected
                     Timer().schedule(WsTimer.Ping(), Date(), 30 * 1000)
                 } else {
-                    KaiheilaWs.status = 0
+                    KaiheilaWs.status = WsStatus.NotConnected
                     KaiheilaWs.logger.error("开黑啦Hello错误")
                     KaiheilaWs.logger.error("错误信息: {}", wsText.d.err)
                     if (wsText.d.code!! == 40103) {
@@ -44,7 +45,7 @@ class WsEvent {
                 if (wsText.sn!! <= KaiheilaWs.sn) {
                     return
                 }
-                if (KaiheilaWs.status == 2) {
+                if (KaiheilaWs.status == WsStatus.Connected) {
                     KaiheilaWs.recvQueue[wsText.sn] = text
                 }
                 while (true) {
