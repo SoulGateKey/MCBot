@@ -23,7 +23,6 @@ class Config {
         var client_secret: String? = null
         var token: String? = null
         var cmd_prefix: List<String>? =  listOf(".", "。", "/", "#")
-        var superadmins: List<Int>? = listOf()
     }
     object Ws {
         var host: String? = "localhost"
@@ -62,52 +61,66 @@ class Config {
         return false
     }
 
-    fun checkConfig() {
+    fun checkBotConfig(): Boolean {
         if (Bot.client_id == null || Bot.client_id!!.isEmpty()) {
             logger.error("配置文件错误: bot.client_id 不存在或为空")
-            exitProcess(1)
+            return false
         } else if (Bot.client_secret == null || Bot.client_secret!!.isEmpty()) {
             logger.error("配置文件错误: bot.client_secret 不存在或为空")
-            exitProcess(1)
+            return false
         } else if (Bot.token == null || Bot.token!!.isEmpty()) {
             logger.error("配置文件错误: bot.token 不存在或为空")
-            exitProcess(1)
+            return false
         } else if (Bot.cmd_prefix == null || Bot.cmd_prefix!!.isEmpty()) {
             logger.error("配置文件错误: bot.cmd_prefix 不存在或为空")
-            exitProcess(1)
-        } else if (Bot.superadmins == null) {
-            logger.error("配置文件错误: bot.superadmins 不存在")
-            exitProcess(1)
-        } else if (Ws.host == null || Ws.host!!.isEmpty()) {
+            return false
+        }
+        return true
+    }
+
+    fun checkWsConfig(): Boolean {
+        if (Ws.host == null || Ws.host!!.isEmpty()) {
             logger.error("配置文件错误: ws.host 不存在或为空")
-            exitProcess(1)
+            return false
         } else if (Ws.port == null || (Ws.port!! < 0 || Ws.port!! > 65535)) {
             logger.error("配置文件错误: ws.port 不存在或不合法")
-            exitProcess(1)
+            return false
         } else if (Ws.path == null || Ws.path!!.isEmpty()) {
             logger.error("配置文件错误: ws.path 不存在或为空")
-            exitProcess(1)
-        } else if (DataBase.MySQL.enable == null) {
+            return false
+        }
+        return true
+    }
+
+    fun checkDataBaseConfig(): Boolean {
+        if (DataBase.MySQL.enable == null) {
             logger.error("配置文件错误: database.mysql.enable 不存在或为空")
-            exitProcess(1)
+            return false
         }
         if (DataBase.MySQL.enable!!) {
             if (DataBase.MySQL.host == null || DataBase.MySQL.host!!.isEmpty()) {
                 logger.error("配置文件错误: database.mysql.host 不存在或为空")
-                exitProcess(1)
+                return false
             } else if (DataBase.MySQL.port == null || (DataBase.MySQL.port!! < 0 || DataBase.MySQL.port!! > 65535)) {
                 logger.error("配置文件错误: database.mysql.port 不存在或不合法")
-                exitProcess(1)
+                return false
             } else if (DataBase.MySQL.user == null || DataBase.MySQL.user!!.isEmpty()) {
                 logger.error("配置文件错误: database.mysql.user 不存在或为空")
-                exitProcess(1)
+                return false
             } else if (DataBase.MySQL.password == null || DataBase.MySQL.password!!.isEmpty()) {
                 logger.error("配置文件错误: database.mysql.password 不存在或为空")
-                exitProcess(1)
+                return false
             } else if (DataBase.MySQL.database == null || DataBase.MySQL.database!!.isEmpty()) {
                 logger.error("配置文件错误: database.mysql.database 不存在或为空")
-                exitProcess(1)
+                return false
             }
+        }
+        return true
+    }
+
+    fun checkConfig() {
+        if (!checkBotConfig() || !checkWsConfig() || !checkDataBaseConfig()) {
+            exitProcess(1)
         }
     }
 
@@ -134,11 +147,6 @@ class Config {
             exitProcess(1)
         }
         Bot.cmd_prefix = root.node("bot", "cmd_prefix").getList(String::class.java)
-        if (!root.node("bot", "superadmins").isList) {
-            logger.error("配置文件错误: bot.superadmins类型错误 非List类型")
-            exitProcess(1)
-        }
-        Bot.superadmins = root.node("bot", "superadmins").getList(Int::class.javaObjectType)
         Ws.host = root.node("ws", "host").string
         Ws.port = root.node("ws", "port").int
         Ws.path = root.node("ws", "path").string
