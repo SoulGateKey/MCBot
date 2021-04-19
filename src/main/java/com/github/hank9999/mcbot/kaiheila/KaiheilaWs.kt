@@ -37,12 +37,12 @@ class KaiheilaWs {
         logger.info("开始获取开黑啦WS连接地址")
         var errorCount = 0
         while (true) {
-            val resp = Http().get(
+            val resp = Http.get(
                 Hardcore.Api.Websocket.gatewayUrl,
                 mutableMapOf<String, String>().apply { this["Authorization"] = "Bot " + Config.Bot.token }
             )
 
-            val gatewayResp = Json().deserialize(resp.response, WebsocketGatewayResp::class)
+            val gatewayResp = Json.deserialize(resp.response, WebsocketGatewayResp::class)
 
             if (gatewayResp == null) {
                 logger.error("获取开黑啦WS连接地址时 json解析失败\njson内容: {}", resp)

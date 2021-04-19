@@ -5,19 +5,14 @@ import com.github.hank9999.mcbot.kaiheila.KaiheilaWs
 import com.github.hank9999.mcbot.kaiheila.types.WsStatus
 import com.github.hank9999.mcbot.kaiheila.utils.MessageHandler
 import com.github.hank9999.mcbot.kaiheila.utils.WsTimer
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.github.hank9999.mcbot.utils.Json
 import java.util.*
 import kotlin.system.exitProcess
 
 class WsEvent {
 
     fun handleEvent(text: String) {
-        val moshi = Moshi.Builder()
-            .addLast(KotlinJsonAdapterFactory())
-            .build()
-        val jsonAdapter = moshi.adapter(WsSignalling::class.java)
-        val wsText = jsonAdapter.fromJson(text)
+        val wsText = Json.deserialize(text, WsSignalling::class)
         if (wsText == null) {
             KaiheilaWs.logger.error("解析开黑啦消息失败")
             return

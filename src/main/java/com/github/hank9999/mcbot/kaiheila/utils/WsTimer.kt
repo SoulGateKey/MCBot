@@ -9,7 +9,7 @@ import java.util.*
 class WsTimer {
     class Ping : TimerTask() {
         override fun run() {
-            val pingJson = Json().serialize(WsPing(sn=KaiheilaWs.sn))
+            val pingJson = Json.serialize(WsPing(sn=KaiheilaWs.sn))
             if (KaiheilaWs.status == WsStatus.Connected) {
                 KaiheilaWs.wsClient!!.send(pingJson)
                 val sendTime = System.currentTimeMillis()
