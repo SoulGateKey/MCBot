@@ -13,15 +13,15 @@ object MCBot {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        if (!Config().checkExists()) {
+        if (!Config.checkExists()) {
             logger.error("未找到配置文件")
             logger.info("已生成配置文件，请配置后再启动程序")
             exitProcess(1)
         }
-        Config().setValue()
-        Config().checkConfig()
+        Config.setValue()
+        Config.checkConfig()
         thread  {
-            KaiheilaWs().connect()
+            KaiheilaWs.connect()
         }
         thread  {
             while (true) {

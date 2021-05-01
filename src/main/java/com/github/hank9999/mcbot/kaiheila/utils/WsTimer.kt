@@ -24,7 +24,7 @@ class WsTimer {
                         Thread.sleep(6000)
                         if (KaiheilaWs.pongTime - sendTime < 0) {
                             KaiheilaWs.logger.error("开黑啦WS超时")
-                            KaiheilaWs().reconnect(1)
+                            KaiheilaWs.connect()
                         }
                     }
                 }

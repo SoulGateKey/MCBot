@@ -30,7 +30,7 @@ class WsEvent {
                     KaiheilaWs.logger.error("错误信息: {}", wsText.d.err)
                     if (wsText.d.code!! == 40103) {
                         KaiheilaWs.logger.error("正在尝试重新连接")
-                        KaiheilaWs().connect()
+                        KaiheilaWs.connect()
                     } else {
                         exitProcess(1)
                     }
@@ -55,7 +55,7 @@ class WsEvent {
                 }
             }
             3 -> KaiheilaWs.pongTime = System.currentTimeMillis()
-            5 -> KaiheilaWs().connect()
+            5 -> KaiheilaWs.connect()
             6 -> KaiheilaWs.logger.info("已收到开黑啦所有离线消息")
             else -> {
                 KaiheilaWs.logger.error("暂不支持处理该消息类型 {}", text)
