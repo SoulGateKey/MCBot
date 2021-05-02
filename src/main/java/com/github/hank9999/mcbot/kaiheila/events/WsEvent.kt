@@ -19,7 +19,6 @@ class WsEvent {
         } else {
             KaiheilaWs.status = WsStatus.NotConnected
             KaiheilaWs.logger.error("开黑啦Hello错误")
-            KaiheilaWs.logger.error("错误信息: {}", wsText.d.err)
             if (wsText.d.code!! == 40103) {
                 KaiheilaWs.logger.error("正在尝试重新连接")
                 KaiheilaWs.connect()
