@@ -11,21 +11,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class DBRead {
     companion object {
-        private fun createTokenByResultRow(result: ResultRow): Token {
-            return Token(
-                token = result[Tables.Token.token],
-                guild = result[Tables.Token.guild],
-                channel = result[Tables.Token.channel],
-                log = result[Tables.Token.log],
-                chat = result[Tables.Token.chat],
-                playerCommand = result[Tables.Token.playerCommand],
-                login = result[Tables.Token.login],
-                logout = result[Tables.Token.logout],
-                rconCommand = result[Tables.Token.rconCommand],
-                tellraw = result[Tables.Token.tellraw]
-            )
-        }
-
         fun readTokenTable(token: String? = null, guild: String? = null, channel: String? = null): Token? {
             var result: ResultRow? = null
             when {
@@ -35,7 +20,7 @@ class DBRead {
                             result = it
                         }
                     }
-                    return result?.let { createTokenByResultRow(it) }
+                    return result?.let { createData.createTokenByResultRow(it) }
                 }
 
                 guild != null && guild.isNotEmpty() -> {
@@ -44,7 +29,7 @@ class DBRead {
                             result = it
                         }
                     }
-                    return result?.let { createTokenByResultRow(it) }
+                    return result?.let { createData.createTokenByResultRow(it) }
                 }
 
                 channel != null && channel.isNotEmpty() -> {
@@ -53,20 +38,11 @@ class DBRead {
                             result = it
                         }
                     }
-                    return result?.let { createTokenByResultRow(it) }
+                    return result?.let { createData.createTokenByResultRow(it) }
                 }
 
                 else -> return null
             }
-        }
-
-        private fun createGroupPermissionByResultRow(result: ResultRow): GroupPermission {
-            return GroupPermission(
-                name = result[Tables.GroupPermission.name],
-                guild = result[Tables.GroupPermission.guild],
-                permission = result[Tables.GroupPermission.permission],
-                bool = result[Tables.GroupPermission.bool]
-            )
         }
 
         fun readGroupPermissionTable(name: String, guild: String): List<GroupPermission> {
@@ -75,19 +51,10 @@ class DBRead {
                 Tables.GroupPermission.select {
                     Tables.GroupPermission.name eq name and (Tables.GroupPermission.guild eq guild)
                 }.forEach {
-                    list.add(createGroupPermissionByResultRow(it))
+                    list.add(createData.createGroupPermissionByResultRow(it))
                 }
             }
             return list
-        }
-
-        private fun createUserPermissionByResultRow(result: ResultRow): UserPermission {
-            return UserPermission(
-                user = result[Tables.UserPermission.user],
-                guild = result[Tables.UserPermission.guild],
-                permission = result[Tables.UserPermission.permission],
-                bool = result[Tables.UserPermission.bool]
-            )
         }
 
         fun readUserPermissionTable(user: String, guild: String): List<UserPermission> {
@@ -96,7 +63,7 @@ class DBRead {
                 Tables.UserPermission.select {
                     Tables.UserPermission.user eq user and (Tables.UserPermission.guild eq guild)
                 }.forEach {
-                    list.add(createUserPermissionByResultRow(it))
+                    list.add(createData.createUserPermissionByResultRow(it))
                 }
             }
             return list
@@ -106,7 +73,7 @@ class DBRead {
             val list = mutableListOf<UserPermission>()
             transaction (DataBase.db) {
                 Tables.UserPermission.select { Tables.UserPermission.user eq user }.forEach {
-                    list.add(createUserPermissionByResultRow(it))
+                    list.add(createData.createUserPermissionByResultRow(it))
                 }
             }
             return list
@@ -154,17 +121,6 @@ class DBRead {
                 }
             }
             return list
-        }
-
-        fun checkFilterExist(guild: String, filter: String): Boolean {
-            var exist = false
-            transaction (DataBase.db) {
-                val query = Tables.Filter.select { Tables.Filter.guild eq guild and (Tables.Filter.filter eq filter) }
-                if (!query.empty()) {
-                    exist = true
-                }
-            }
-            return exist
         }
     }
 }
