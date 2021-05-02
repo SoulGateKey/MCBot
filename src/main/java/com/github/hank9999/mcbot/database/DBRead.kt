@@ -102,6 +102,16 @@ class DBRead {
             return list
         }
 
+        fun readUserPermissionTable(user: String): List<UserPermission> {
+            val list = mutableListOf<UserPermission>()
+            transaction (DataBase.db) {
+                Tables.UserPermission.select { Tables.UserPermission.user eq user }.forEach {
+                    list.add(createUserPermissionByResultRow(it))
+                }
+            }
+            return list
+        }
+
         fun getGroupPermission(name: String, guild: String, permission: String): Boolean? {
             var bool: Boolean? = null
             transaction (DataBase.db) {

@@ -44,6 +44,26 @@ class DBDelete {
             return success
         }
 
+        fun deleteGroupPermission(name: String, guild: String, permission: String): Boolean {
+            var success = false
+            transaction(DataBase.db) {
+                val count = Tables.GroupPermission.select {
+                    Tables.GroupPermission.name eq name and
+                            (Tables.GroupPermission.guild eq guild) and
+                            (Tables.GroupPermission.permission eq permission)
+                }.count()
+                if (count != 0.toLong()) {
+                    Tables.GroupPermission.deleteWhere {
+                        Tables.GroupPermission.name eq name
+                        Tables.GroupPermission.guild eq guild
+                        Tables.GroupPermission.permission eq permission
+                    }
+                    success = true
+                }
+            }
+            return success
+        }
+
         fun deleteUserPermission(data: UserPermission): Boolean {
             var success = false
             transaction(DataBase.db) {
@@ -58,6 +78,26 @@ class DBDelete {
                         Tables.UserPermission.guild eq data.guild
                         Tables.UserPermission.permission eq data.permission
                         Tables.UserPermission.bool eq data.bool
+                    }
+                    success = true
+                }
+            }
+            return success
+        }
+
+        fun deleteUserPermission(user: String, guild: String, permission: String): Boolean {
+            var success = false
+            transaction(DataBase.db) {
+                val count = Tables.UserPermission.select {
+                    Tables.UserPermission.user eq user and
+                            (Tables.UserPermission.guild eq guild) and
+                            (Tables.UserPermission.permission eq permission)
+                }.count()
+                if (count != 0.toLong()) {
+                    Tables.UserPermission.deleteWhere {
+                        Tables.UserPermission.user eq user
+                        Tables.UserPermission.guild eq guild
+                        Tables.UserPermission.permission eq permission
                     }
                     success = true
                 }
