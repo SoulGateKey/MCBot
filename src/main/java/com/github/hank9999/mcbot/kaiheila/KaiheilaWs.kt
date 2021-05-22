@@ -20,6 +20,7 @@ class KaiheilaWs {
         var timeoutCount = 0
         val logger: Logger = LoggerFactory.getLogger(KaiheilaWs::class.java)
         val recvQueue = mutableMapOf<Int, String>()
+        var isConnecting = false
 
         private fun getWsAddressError(errCount: Int): Int {
             val errorCount = errCount + 1
@@ -88,6 +89,7 @@ class KaiheilaWs {
 
         fun connect() {
             while (true) {
+                isConnecting = true
                 cleanCounter()
                 wsClient = KaiheilaWsClient(URI(getWsUrl()))
                 wsClient!!.connect()
@@ -101,6 +103,7 @@ class KaiheilaWs {
                     }
                 }
                 if (status == WsStatus.Connected) {
+                    isConnecting = false
                     break
                 } else {
                     logger.error("未收到开黑啦Hello消息, 连接失败, 2次重连失败, 正在重新开始")

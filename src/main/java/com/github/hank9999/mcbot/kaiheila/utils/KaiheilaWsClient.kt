@@ -16,6 +16,10 @@ class KaiheilaWsClient(serverUri: URI) : WebSocketClient(serverUri) {
     override fun onClose(code: Int, reason: String, remote: Boolean) {
         KaiheilaWs.logger.error("开黑啦WS连接已关闭 {} 错误码: {} 原因: {}", (if (remote) "远端" else "本地"), code, reason)
         KaiheilaWs.status = WsStatus.NotConnected
+        Thread.sleep(6 * 1000)
+        if (KaiheilaWs.status == WsStatus.NotConnected && !KaiheilaWs.isConnecting) {
+            KaiheilaWs.connect()
+        }
     }
 
     override fun onError(ex: Exception) {
