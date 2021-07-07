@@ -11,38 +11,34 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class DBRead {
     companion object {
-        fun readTokenTable(token: String? = null, guild: String? = null, channel: String? = null): Token? {
+        fun readTokenTableByToken(token: String): Token? {
             var result: ResultRow? = null
-            when {
-                token != null && token.isNotEmpty() -> {
-                    transaction (DataBase.db) {
-                        Tables.Token.select { Tables.Token.token eq token }.forEach {
-                            result = it
-                        }
-                    }
-                    return result?.let { createData.createTokenByResultRow(it) }
+            transaction (DataBase.db) {
+                Tables.Token.select { Tables.Token.token eq token }.forEach {
+                    result = it
                 }
-
-                guild != null && guild.isNotEmpty() -> {
-                    transaction (DataBase.db) {
-                        Tables.Token.select { Tables.Token.guild eq guild }.forEach {
-                            result = it
-                        }
-                    }
-                    return result?.let { createData.createTokenByResultRow(it) }
-                }
-
-                channel != null && channel.isNotEmpty() -> {
-                    transaction (DataBase.db) {
-                        Tables.Token.select { Tables.Token.channel eq channel }.forEach {
-                            result = it
-                        }
-                    }
-                    return result?.let { createData.createTokenByResultRow(it) }
-                }
-
-                else -> return null
             }
+            return result?.let { CreateData.createTokenByResultRow(it) }
+        }
+
+        fun readTokenTableByGuild(guild: String): Token? {
+            var result: ResultRow? = null
+            transaction (DataBase.db) {
+                Tables.Token.select { Tables.Token.guild eq guild }.forEach {
+                    result = it
+                }
+            }
+            return result?.let { CreateData.createTokenByResultRow(it) }
+        }
+
+        fun readTokenTableByChannel(channel: String): Token? {
+            var result: ResultRow? = null
+            transaction (DataBase.db) {
+                Tables.Token.select { Tables.Token.channel eq channel }.forEach {
+                    result = it
+                }
+            }
+            return result?.let { CreateData.createTokenByResultRow(it) }
         }
 
         fun readGroupPermissionTable(name: String, guild: String): List<GroupPermission> {
@@ -51,7 +47,7 @@ class DBRead {
                 Tables.GroupPermission.select {
                     Tables.GroupPermission.name eq name and (Tables.GroupPermission.guild eq guild)
                 }.forEach {
-                    list.add(createData.createGroupPermissionByResultRow(it))
+                    list.add(CreateData.createGroupPermissionByResultRow(it))
                 }
             }
             return list
@@ -63,7 +59,7 @@ class DBRead {
                 Tables.UserPermission.select {
                     Tables.UserPermission.user eq user and (Tables.UserPermission.guild eq guild)
                 }.forEach {
-                    list.add(createData.createUserPermissionByResultRow(it))
+                    list.add(CreateData.createUserPermissionByResultRow(it))
                 }
             }
             return list
@@ -73,7 +69,7 @@ class DBRead {
             val list = mutableListOf<UserPermission>()
             transaction (DataBase.db) {
                 Tables.UserPermission.select { Tables.UserPermission.user eq user }.forEach {
-                    list.add(createData.createUserPermissionByResultRow(it))
+                    list.add(CreateData.createUserPermissionByResultRow(it))
                 }
             }
             return list

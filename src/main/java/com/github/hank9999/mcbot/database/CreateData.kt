@@ -5,7 +5,7 @@ import com.github.hank9999.mcbot.types.Token
 import com.github.hank9999.mcbot.types.UserPermission
 import org.jetbrains.exposed.sql.ResultRow
 
-class createData {
+class CreateData {
     companion object {
         fun createTokenByResultRow(result: ResultRow): Token {
             return Token(

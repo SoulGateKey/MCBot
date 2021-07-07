@@ -11,7 +11,7 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <kotlin.version>1.5.0</kotlin.version>
+        <kotlin.version>1.5.20</kotlin.version>
     </properties>
 
     <build>
@@ -69,12 +69,12 @@
         <dependency>
             <groupId>com.squareup.moshi</groupId>
             <artifactId>moshi-kotlin</artifactId>
-            <version>1.11.0</version>
+            <version>1.12.0</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.moshi</groupId>
             <artifactId>moshi-kotlin-codegen</artifactId>
-            <version>1.11.0</version>
+            <version>1.12.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -136,6 +136,13 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.24</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.hank9999</groupId>
+            <artifactId>khlSDK</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>D:/Project/khlSDK/target/khlSDK-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

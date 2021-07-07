@@ -11,12 +11,12 @@ class PMCheck {
         }
 
         fun checkUser(user: String, guild: String): Boolean {
-            return PMRead.getUserGroups(user, guild).count() != 0
+            return PMRead.getUserGroups(user, guild).isNotEmpty()
         }
 
         fun checkUserGroupPermission(user: String, guild: String, permission: String): Boolean {
             val groups = PMRead.getUserGroups(user, guild)
-            if (groups.count() == 0) {
+            if (groups.isEmpty()) {
                 return checkGroupPermission("group.default", guild, permission)
             } else {
                 groups.forEach {
