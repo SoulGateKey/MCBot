@@ -1,6 +1,9 @@
 package com.github.hank9999.mcbot
 
-import com.github.hank9999.mcbot.kaiheila.KaiheilaWs
+import com.github.hank9999.khlsdk.KhlSDK
+import com.github.hank9999.mcbot.database.DataBase
+import com.github.hank9999.mcbot.events.Handler
+import com.github.hank9999.mcbot.permission.PMCheck
 import com.github.hank9999.mcbot.utils.Config
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -20,13 +23,14 @@ object MCBot {
         }
         Config.setValue()
         Config.checkConfig()
-        thread  {
-            KaiheilaWs.connect()
-        }
+        KhlSDK(Config.config) { Handler.onEvent(it) }
+//        thread  {
+//            DataBase.init()
+//        }
         thread  {
             while (true) {
-                val command = readLine()
-                if (command?.startsWith("quit") == true) {
+                val command = readLine().toString()
+                if (command.startsWith("quit")) {
                     exitProcess(0)
                 }
             }

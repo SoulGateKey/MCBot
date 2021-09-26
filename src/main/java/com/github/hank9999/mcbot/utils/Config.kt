@@ -40,6 +40,7 @@ class Config {
     companion object {
         private val logger: Logger = LoggerFactory.getLogger(Config::class.java)
         private const val configFile = "config.conf"
+        lateinit var config: com.github.hank9999.khlsdk.types.Config
 
         fun checkExists(): Boolean {
             val file = File(configFile)
@@ -123,6 +124,7 @@ class Config {
             if (!checkBotConfig() || !checkWsConfig() || !checkDataBaseConfig()) {
                 exitProcess(1)
             }
+            config = com.github.hank9999.khlsdk.types.Config(Bot.client_id!!, Bot.client_secret!!, Bot.token!!, "", Bot.cmd_prefix!!)
         }
 
         fun setValue() {
