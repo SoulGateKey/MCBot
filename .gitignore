@@ -112,4 +112,6 @@ buildNumber.properties
 # Common working directory
 run/
 
+config.json
+
 config_local.py

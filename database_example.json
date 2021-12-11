@@ -1,0 +1,20 @@
+{
+  "token": "ffffffff-ffff-ffff-ffff-ffffffffffff",
+  "guild": "0",
+  "channel": {
+    "default": "0",
+    "log": "-1",
+    "chat": "-1",
+    "player_command": "-1",
+    "login": "-1",
+    "logout": "-1",
+    "rcon_command": "-1"
+  },
+  "permission": {
+    "user_permission": {},
+    "group_permission": {},
+    "role": {}
+  },
+  "filter": [],
+  "tellraw": "[\"\",{\"text\":\"<\",\"color\":\"white\"},{\"text\":\"%playerId%\",\"color\":\"gold\"},{\"text\":\"> \",\"color\":\"white\"},{\"text\":\"%text%\",\"color\":\"white\"}]"
+}
